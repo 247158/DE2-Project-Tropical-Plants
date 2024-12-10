@@ -62,4 +62,4 @@
 <img src="images/photo.jpg" alt="photo">
 
 ## References and tools
-1. [AVR course from GitHub of Tomas Fryza](https://github.com/tomas-fryza/avr-course)
+[AVR course from GitHub of Tomas Fryza](https://github.com/tomas-fryza/avr-course)
