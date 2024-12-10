@@ -23,6 +23,24 @@
 
 ## Software description
 
+```c
+   de2_project         // PlatfomIO project
+   ├── include         // Included file(s)
+   │   └── timer.h
+   ├── lib             // Libraries
+   │   ├── twi         // Tomas Fryza's TWI/I2C library
+   │   │   ├── twi.c
+   │   │   └── twi.h
+   │   └── oled        // Sylaina's OLED library
+   │       ├── font.h
+   │       ├── oled.c
+   │       └── oled.h
+   ├── src             // Source file(s)
+   │   └── main.c
+   ├── test            // No need this
+   └── platformio.ini  // Project Configuration File
+```
+
 ## Instructions and photos
 
 ## References and tools
