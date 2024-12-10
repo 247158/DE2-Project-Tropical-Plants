@@ -61,5 +61,7 @@
 
 <img src="images/photo.jpg" alt="photo">
 
+This project enables the monitoring and adjustment of critical environmental parameters. Using our system, you can track real-time data on air humidity and temperature, soil moisture, and light levels (in percentages) displayed on an OLED screen. It provides a convenient way to manage and control these values to maintain optimal conditions for your environment.
+
 ## References and tools
 [AVR course from GitHub of Tomas Fryza](https://github.com/tomas-fryza/avr-course)
