@@ -20,7 +20,7 @@
   
 * DHT11 Sensor: Measures air temperature and humidity.
 
-<img src="images/DHT11-Sensor.jpg" alt="DHT11 Sensor" width="450" height="500">
+<img src="images/DHT12-Sensor.jpg" alt="DHT11 Sensor" width="450" height="500">
   
 * Photoresistor: Measures ambient light levels.
 
