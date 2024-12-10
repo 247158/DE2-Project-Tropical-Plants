@@ -62,3 +62,8 @@
 <img src="images/photo.jpg" alt="photo">
 
 ## References and tools
+1. [AVR course from GitHub of Tomas Fryza](https://github.com/tomas-fryza/avr-course)
+2. [Datasheet of ATmega328p](https://www.microchip.com/en-us/product/ATmega328p)
+3. [OLED with humidity sensor from GitHub of Tomas Fryza](https://github.com/tomas-fryza/avr-course/tree/master/solutions/lab6-i2c-sensor-oled)
+4. [Cirkit Designer IDE](https://app.cirkitdesigner.com/)
+5. [Draw.io](https://app.diagrams.net)
