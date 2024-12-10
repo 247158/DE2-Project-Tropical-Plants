@@ -8,19 +8,33 @@
 * Anton Panteleev (responsible for )
 
 ## Hardware description
-1. Arduino Uno:
+### 1. Arduino Uno:
 * Central controller for processing data from sensors and managing outputs.
 
-![arduino_uno](images/arduino_uno.png)
+<img src="images/arduino_uno.png" alt="Arduino Uno" width="450" height="500">
 
-2. Sensors:
+### 2. Sensors:
 * Soil Moisture Sensor: Measures the moisture level in the soil.
-* DHT11/DHT22 Sensor: Measures air temperature and humidity.
+
+<img src="images/soil_sensor.jpg" alt="Soil Moisture Sensor" width="450" height="500">
+  
+* DHT11 Sensor: Measures air temperature and humidity.
+
+<img src="images/DHT11-Sensor.jpg" alt="DHT11 Sensor" width="450" height="500">
+  
 * Photoresistor: Measures ambient light levels.
 
-3. Output Devices:
+<img src="images/photoresistor.jpg" alt="Photoresistor" width="450" height="500">
+
+### 3. Output Devices:
 * OLED Display (I2C interface): Displays real-time sensor readings (e.g., soil moisture, air temperature, humidity, and light levels).
+
+<img src="images/oled-i2c.jpg" alt="OLED Display" width="450" height="500">
+  
 * Fan: Operates continuously to simulate airflow.
+
+<img src="images/fan.jpg" alt="Fan" width="450" height="500">
+
 * LED Strip: Illuminates constantly for lighting purposes.
 
 ## Software description
