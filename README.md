@@ -59,4 +59,6 @@
 
 ## Instructions and photos
 
+<img src="images/photo.jpg" alt="photo">
+
 ## References and tools
