@@ -11,6 +11,8 @@
 1. Arduino Uno:
 * Central controller for processing data from sensors and managing outputs.
 
+![arduino_uno](images/arduino_uno.png)
+
 2. Sensors:
 * Soil Moisture Sensor: Measures the moisture level in the soil.
 * DHT11/DHT22 Sensor: Measures air temperature and humidity.
