@@ -2,10 +2,10 @@
 
 ## Team members
 
-* Ivan Efimov (responsible for )
-* Ivan Pavlov (responsible for )
-* Ruslan Oleinik (responsible for )
-* Anton Panteleev (responsible for )
+* Ivan Efimov (responsible for the soil moisture sensor and the air temperature and humidity sensor (DHT12))
+* Ivan Pavlov (responsible for the photoresistor and the air temperature and humidity sensor (DHT12))
+* Ruslan Oleinik (responsible for the LED strip and the OLED display)
+* Anton Panteleev (responsible for the fan and GitHub repository management)
 
 ## Hardware description
 ### 1. Arduino Uno:
