@@ -3,7 +3,7 @@
 #include "timer.h"          // Timer library for AVR-GCC
 #include "twi.h"            // I2C/TWI library for AVR-GCC
 #include "oled.h"
-#include "ws2812.h"         // Библиотека для управления WS2812B
+#include <util/delay.h>      // Для функций задержки _delay_ms и _delay_us
 #include <stdio.h>          // C library for `sprintf`
 
 // -- Defines --------------------------------------------------------
@@ -17,20 +17,22 @@
 #define ADC_LIGHT_MIN 100       // Minimum ADC value in complete darkness
 #define ADC_LIGHT_MAX 900       // Maximum ADC value in bright light
 
-#define LED_PIN PB1             // Пин для управления WS2812B (пин 13 на Arduino Uno)
-#define NUM_LEDS 8              // Количество светодиодов
+#define LED_PIN PB5             // Pin for LED strip control
+#define BUTTON_PIN PD2          // Pin for the button
+#define DEBOUNCE_DELAY 50       // Debounce delay in milliseconds
 
 // -- Global variables -----------------------------------------------
 volatile uint8_t flag_update_oled = 0;
 volatile uint8_t dht12_values[5];
-struct cRGB leds[NUM_LEDS];      // Массив для управления светодиодами
+volatile uint8_t led_on = 0;     // State of the LED strip
 
 // -- Function prototypes --------------------------------------------
 void adc_init(void);
 uint16_t adc_read(uint8_t channel);
 void oled_setup(void);
 void timer1_init(void);
-void update_led_brightness(uint8_t brightness);
+void led_strip_control(uint8_t state);
+void button_init(void);
 
 // -- Function definitions -------------------------------------------
 
@@ -57,9 +59,6 @@ void oled_setup(void) {
 
     oled_charMode(NORMALSIZE);
 
-    oled_gotoxy(0, 2);
-    oled_puts("128x64, SH1106");
-
     oled_drawLine(0, 25, 120, 25, WHITE);
 
     oled_gotoxy(0, 6);
@@ -73,6 +72,9 @@ void oled_setup(void) {
     oled_gotoxy(0, 5);
     oled_puts("Light [%]:");
 
+    oled_gotoxy(0, 2);
+    oled_puts("LED: OFF");
+
     oled_display();
 }
 
@@ -81,13 +83,18 @@ void timer1_init(void) {
     TIM1_ovf_enable();
 }
 
-void update_led_brightness(uint8_t brightness) {
-    for (uint8_t i = 0; i < NUM_LEDS; i++) {
-        leds[i].r = brightness;  // Красный компонент
-        leds[i].g = brightness;  // Зеленый компонент
-        leds[i].b = brightness;  // Синий компонент
+void led_strip_control(uint8_t state) {
+    if (state) {
+        PORTB |= (1 << LED_PIN);  // Turn on LED strip
+    } else {
+        PORTB &= ~(1 << LED_PIN); // Turn off LED strip
     }
-    ws2812_setleds(leds, NUM_LEDS);
+    led_on = state;
+}
+
+void button_init(void) {
+    DDRD &= ~(1 << BUTTON_PIN);  // Configure BUTTON_PIN as input
+    PORTD |= (1 << BUTTON_PIN);  // Enable internal pull-up resistor
 }
 
 /*
@@ -101,12 +108,13 @@ int main(void) {
     oled_setup();
     timer1_init();
     adc_init();
+    button_init();
 
-    // Инициализация WS2812B (Пин PB5)
+    // Set LED pin as output
     DDRB |= (1 << LED_PIN);
+    led_strip_control(0); // Ensure LED strip is off initially
 
     sei();
-    //cli();
 
     while (1) {
         if (flag_update_oled == 1) {
@@ -151,11 +159,18 @@ int main(void) {
             sprintf(oled_msg, "%u%%", (light_level * 100) / 255); // Convert to percentage
             oled_puts(oled_msg);
 
-            // Update WS2812B LEDs brightness
-            update_led_brightness(light_level);
 
             oled_display();
             flag_update_oled = 0;
+        }
+
+        // Check for button press
+        if (!(PIND & (1 << BUTTON_PIN))) { // If button is pressed (active LOW)
+            _delay_ms(DEBOUNCE_DELAY);
+            if (!(PIND & (1 << BUTTON_PIN))) { // Confirm button press
+                led_strip_control(!led_on); // Toggle LED state
+                while (!(PIND & (1 << BUTTON_PIN))); // Wait for button release
+            }
         }
     }
 
