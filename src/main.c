@@ -11,7 +11,7 @@
 #define DHT_HUM_MEM 0
 #define DHT_TEMP_MEM 2
 
-#define ADC_CHANNEL_SOIL 0      // ADC channel for the soil moisture sensor
+#define ADC_CHANNEL_SOIL 0      // Nastavuje bit REFS0 v registru ADMUX,
 #define ADC_CHANNEL_LIGHT 1     // ADC channel for the light sensor (fotor)
 
 #define ADC_LIGHT_MIN 100       // Minimum ADC value in complete darkness
@@ -37,17 +37,47 @@ void button_init(void);
 // -- Function definitions -------------------------------------------
 
 void adc_init(void) {
-    ADMUX = (1 << REFS0);          // Use AVcc as reference voltage
-    ADCSRA = (1 << ADEN) |         // Enable ADC
-             (1 << ADPS2) |        // Set prescaler to 64
+    ADMUX = (1 << REFS0);     
+    /*Nastavuje bit REFS0 v registru ADMUX.
+    To znamená, že jako referenční napětí bude
+    použito napájecí napětí mikrokontroléru (AVcc).
+    */
+    ADCSRA = (1 << ADEN) |         
+        /*
+        Aktivuje ADC nastavením bitu ADEN (ADC Enable) v registru ADCSRA.
+        */
+             (1 << ADPS2) |       
+        /*
+        Nastavuje dělič hodinového signálu (prescaler) pomocí bitů ADPS2 a ADPS1.
+        Výsledný dělič je 64, což snižuje frekvenci
+        ADC na vhodnou hodnotu (ideální frekvence pro ADC je mezi 50–200 kHz).
+        */
              (1 << ADPS1);
 }
 
 uint16_t adc_read(uint8_t channel) {
-    ADMUX = (ADMUX & 0xF0) | (channel & 0x0F); // Select ADC channel
-    ADCSRA |= (1 << ADSC);                     // Start conversion
-    while (ADCSRA & (1 << ADSC));              // Wait for conversion to finish
+    ADMUX = (ADMUX & 0xF0) | (channel & 0x0F);
+    /*
+    Vymaže spodní 4 bity v registru ADMUX a nastaví je na hodnotu
+    z proměnné channel. Tím se vybere vstupní kanál ADC
+    (např. 0–7 pro 8kanálový ADC).
+    */
+    ADCSRA |= (1 << ADSC);                 
+    /*
+    Nastaví bit ADSC (ADC Start Conversion)
+    v registru ADCSRA, čímž spustí převod analogového signálu na digitální.
+    */
+    while (ADCSRA & (1 << ADSC));  
+    /*
+    Čeká na dokončení převodu. Dokud je bit ADSC nastavený,
+    převod ještě probíhá.
+    */
+    
     return ADC;
+    /*
+    Vrátí 10bitovou digitální hodnotu z registru ADC,
+    která odpovídá vstupnímu napětí na vybraném kanálu.
+    */
 }
 
 void oled_setup(void) {
