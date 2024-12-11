@@ -120,4 +120,5 @@ This project enables the monitoring and adjustment of critical environmental par
 
 ## References and tools
 [AVR course from GitHub of Tomas Fryza](https://github.com/tomas-fryza/avr-course)
+[Presentation](https://docs.google.com/presentation/d/1m8dk5Qir-ttnZAApGQMRKTa7_P3oZ743/edit?usp=sharing&ouid=112709814871286802284&rtpof=true&sd=true)
 
